@@ -1,5 +1,5 @@
 class LinkedList {
-    constructor(){
+    constructor() {
         this.root = {
             data: null,
             next: null,
@@ -38,7 +38,7 @@ class LinkedList {
         };
         let lastNode = this.root;
 
-        while(lastNode.next !== null){
+        while(lastNode.next !== null) {
             lastNode = lastNode.next;
         };
         lastNode.next = node;
