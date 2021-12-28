@@ -4,4 +4,5 @@ const Header = async () =>{
     header.innerText = "Most wanted criminals"
     return header
 }
+
 export default Header;
