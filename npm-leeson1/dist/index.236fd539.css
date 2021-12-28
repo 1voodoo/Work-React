@@ -1,0 +1,73 @@
+body{
+    background-image: url(https://look.com.ua/pic/201701/800x600/look.com.ua-192267.jpg);
+    background-size: 100%
+}
+.container{
+    padding: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 2vw;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    max-width: 230px;
+    height: auto;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    text-align: left;
+    background-color: #deebdd;
+
+}
+.card p {
+    padding: 0 10px;
+    color: rgb(7, 7, 7);
+    font-size: 10px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10px;
+    
+}
+
+.card span{
+    color: rgb(90, 105, 90);
+    font-family: monospace;
+    font-style: italic;
+    font-size: 12px;
+}
+.header {
+    color: seashell;
+    background-color: red;
+    padding: 50px;
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: xx-large;
+    font-size: 100px;
+}
+.footer{
+    position: relative;
+    background-color: royalblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0 ;
+    font-size: 40px;
+    color: whitesmoke;
+}
+.phone {
+    width: 30px;
+    height: 30px;
+}
+.p {
+    margin: 0 25px;
+    color: red;
+    font-size: 35px;
+    font-weight: bold;
+}
+.car {
+    margin-right: 1077px;
+    position: absolute;
+    width: 40px;
+    height: 40px;
+}
+/*# sourceMappingURL=index.236fd539.css.map */
