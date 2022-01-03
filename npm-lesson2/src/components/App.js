@@ -3,11 +3,9 @@ import CardList from "./CardLIst/CardList";
 
 const App =  async() => {
     const container = document.createElement("div");
-
     const cardList = CardList({
-        cards: await getBugs(),
+    cards: await getBugs(),
     });
-
     container.append(cardList)
    
     return container;

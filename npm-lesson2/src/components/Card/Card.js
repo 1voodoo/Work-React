@@ -2,9 +2,7 @@ import showToast from "native-toast";
 
 const Card = (props) => {
     const container = document.createElement("div");
-
     container.classList.add("card");
-    
     container.addEventListener("click", () => {
 
         showToast({ 
@@ -22,7 +20,6 @@ const Card = (props) => {
     const fileName = document.createElement("p");
     let lol = fileName.innerText = props.fileName;
    
-
     const name = document.createElement("p");
     name.innerHTML = `<span>Name: </span>${props.name === null ? "unknown":props.name}`;
 

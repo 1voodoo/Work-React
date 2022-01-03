@@ -1,7 +1,6 @@
 const  getBugs = async() => {
   try{
     const response = await fetch("http://acnhapi.com/v1/bugs");
-  
     const data = await response.json();
     const arr = Object.values(data);
 
