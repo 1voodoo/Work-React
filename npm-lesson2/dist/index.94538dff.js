@@ -80,11 +80,13 @@
     return cache[name].exports;
 
     function localRequire(x) {
-      return newRequire(localRequire.resolve(x));
+      var res = localRequire.resolve(x);
+      return res === false ? {} : newRequire(res);
     }
 
     function resolve(x) {
-      return modules[name][1][x] || x;
+      var id = modules[name][1][x];
+      return id != null ? id : x;
     }
   }
 
@@ -140,13 +142,25 @@
       this[globalName] = mainExports;
     }
   }
-})({"iEUqe":[function(require,module,exports) {
+})({"jL3dg":[function(require,module,exports) {
 var HMR_HOST = null;
 var HMR_PORT = null;
 var HMR_SECURE = false;
 var HMR_ENV_HASH = "4a236f9275d0a351";
 module.bundle.HMR_BUNDLE_ID = "071135d094538dff";
 "use strict";
+function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+}
+function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+}
 function _createForOfIteratorHelper(o, allowArrayLike) {
     var it;
     if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
@@ -406,6 +420,16 @@ function hmrApply(bundle, asset) {
     else if (asset.type === 'js') {
         var deps = asset.depsByBundle[bundle.HMR_BUNDLE_ID];
         if (deps) {
+            if (modules[asset.id]) {
+                // Remove dependencies that are removed and will become orphaned.
+                // This is necessary so that if the asset is added back again, the cache is gone, and we prevent a full page reload.
+                var oldDeps = modules[asset.id][1];
+                for(var dep in oldDeps)if (!deps[dep] || deps[dep] !== oldDeps[dep]) {
+                    var id = oldDeps[dep];
+                    var parents = getParents(module.bundle.root, id);
+                    if (parents.length === 1) hmrDelete(module.bundle.root, id);
+                }
+            }
             var fn = new Function('require', 'module', 'exports', asset.output);
             modules[asset.id] = [
                 fn,
@@ -414,7 +438,48 @@ function hmrApply(bundle, asset) {
         } else if (bundle.parent) hmrApply(bundle.parent, asset);
     }
 }
+function hmrDelete(bundle, id1) {
+    var modules = bundle.modules;
+    if (!modules) return;
+    if (modules[id1]) {
+        // Collect dependencies that will become orphaned when this module is deleted.
+        var deps = modules[id1][1];
+        var orphans = [];
+        for(var dep in deps){
+            var parents = getParents(module.bundle.root, deps[dep]);
+            if (parents.length === 1) orphans.push(deps[dep]);
+        } // Delete the module. This must be done before deleting dependencies in case of circular dependencies.
+        delete modules[id1];
+        delete bundle.cache[id1]; // Now delete the orphans.
+        orphans.forEach(function(id) {
+            hmrDelete(module.bundle.root, id);
+        });
+    } else if (bundle.parent) hmrDelete(bundle.parent, id1);
+}
 function hmrAcceptCheck(bundle, id, depsByBundle) {
+    if (hmrAcceptCheckOne(bundle, id, depsByBundle)) return true;
+     // Traverse parents breadth first. All possible ancestries must accept the HMR update, or we'll reload.
+    var parents = getParents(module.bundle.root, id);
+    var accepted = false;
+    while(parents.length > 0){
+        var v = parents.shift();
+        var a = hmrAcceptCheckOne(v[0], v[1], null);
+        if (a) // If this parent accepts, stop traversing upward, but still consider siblings.
+        accepted = true;
+        else {
+            // Otherwise, queue the parents in the next level upward.
+            var p = getParents(module.bundle.root, v[1]);
+            if (p.length === 0) {
+                // If there are no parents, then we've reached an entry without accepting. Reload.
+                accepted = false;
+                break;
+            }
+            parents.push.apply(parents, _toConsumableArray(p));
+        }
+    }
+    return accepted;
+}
+function hmrAcceptCheckOne(bundle, id, depsByBundle) {
     var modules = bundle.modules;
     if (!modules) return;
     if (depsByBundle && !depsByBundle[bundle.HMR_BUNDLE_ID]) {
@@ -430,12 +495,7 @@ function hmrAcceptCheck(bundle, id, depsByBundle) {
         bundle,
         id
     ]);
-    if (cached && cached.hot && cached.hot._acceptCallbacks.length) return true;
-    var parents = getParents(module.bundle.root, id); // If no parents, the asset is new. Prevent reloading the page.
-    if (!parents.length) return true;
-    return parents.some(function(v) {
-        return hmrAcceptCheck(v[0], v[1], null);
-    });
+    if (!cached || cached.hot && cached.hot._acceptCallbacks.length) return true;
 }
 function hmrAcceptRun(bundle, id) {
     var cached = bundle.cache[id];
@@ -464,11 +524,47 @@ var _app = require("./src/components/App");
 var _appDefault = parcelHelpers.interopDefault(_app);
 (async ()=>{
     const app = await _appDefault.default();
-    const root = document.getElementById("root");
+    const root = document.getElementById('root');
     root.append(app);
 })();
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"1e7QO","./src/components/App":"1zoys"}],"1e7QO":[function(require,module,exports) {
+},{"./src/components/App":"1zoys","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"1zoys":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _api = require("./Api/Api");
+var _apiDefault = parcelHelpers.interopDefault(_api);
+var _cardList = require("./CardLIst/CardList");
+var _cardListDefault = parcelHelpers.interopDefault(_cardList);
+const App = async ()=>{
+    const container = document.createElement('div');
+    const cardList = _cardListDefault.default({
+        cards: await _apiDefault.default()
+    });
+    container.append(cardList);
+    return container;
+};
+exports.default = App;
+
+},{"./Api/Api":"4msWX","./CardLIst/CardList":"e9fNR","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"4msWX":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+const getBugs = async ()=>{
+    const response = await fetch('http://acnhapi.com/v1/bugs');
+    const data = await response.json();
+    const arr = Object.values(data);
+    return arr.map((item)=>({
+            src: item.image_uri,
+            name: item.name['name-EUru'],
+            location: item.availability.location,
+            price: item.price,
+            rarity: item.availability.rarity,
+            fileName: item['file-name']
+        })
+    );
+};
+exports.default = getBugs;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"ciiiV":[function(require,module,exports) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -498,97 +594,56 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"1zoys":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _api = require("./Api/Api");
-var _apiDefault = parcelHelpers.interopDefault(_api);
-var _cardList = require("./CardLIst/CardList");
-var _cardListDefault = parcelHelpers.interopDefault(_cardList);
-const App = async ()=>{
-    const container = document.createElement("div");
-    const cardList = _cardListDefault.default({
-        cards: await _apiDefault.default()
-    });
-    container.append(cardList);
-    return container;
-};
-exports.default = App;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"1e7QO","./Api/Api":"4msWX","./CardLIst/CardList":"e9fNR"}],"4msWX":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-const getBugs = async ()=>{
-    try {
-        const response = await fetch("http://acnhapi.com/v1/bugs");
-        const data = await response.json();
-        const arr = Object.values(data);
-        return arr.map((item)=>{
-            return {
-                src: item.image_uri,
-                name: item.name["name-EUru"],
-                location: item.availability.location,
-                price: item.price,
-                rarity: item.availability.rarity,
-                fileName: item["file-name"]
-            };
-        });
-    } catch (error) {
-        alert("Oops something went wrong");
-    }
-};
-exports.default = getBugs;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"1e7QO"}],"e9fNR":[function(require,module,exports) {
+},{}],"e9fNR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _card = require("../Card/Card");
 var _cardDefault = parcelHelpers.interopDefault(_card);
 const CardList = (props)=>{
-    const container = document.createElement("div");
-    container.classList.add("container");
-    const cardElements = props.cards.map((card)=>{
-        return _cardDefault.default(card);
-    });
+    const container = document.createElement('div');
+    container.classList.add('container');
+    const cardElements = props.cards.map((card)=>_cardDefault.default(card)
+    );
     container.append(...cardElements);
     return container;
 };
 exports.default = CardList;
 
-},{"../Card/Card":"a8gYF","@parcel/transformer-js/src/esmodule-helpers.js":"1e7QO"}],"a8gYF":[function(require,module,exports) {
+},{"../Card/Card":"a8gYF","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"a8gYF":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _nativeToast = require("native-toast");
 var _nativeToastDefault = parcelHelpers.interopDefault(_nativeToast);
 const Card = (props)=>{
-    const container = document.createElement("div");
-    container.classList.add("card");
-    container.addEventListener("click", ()=>{
+    const container = document.createElement('div');
+    container.classList.add('card');
+    const fileName = document.createElement('p');
+    // eslint-disable-next-line no-multi-assign
+    const lol = fileName.innerText = props.fileName;
+    container.addEventListener('click', ()=>{
         _nativeToastDefault.default({
             message: lol,
-            position: "center",
+            position: 'center',
             rounded: true,
-            type: "success"
+            type: 'success'
         });
     });
-    const img = document.createElement("img");
+    const img = document.createElement('img');
     img.src = props.src;
-    const fileName = document.createElement("p");
-    let lol = fileName.innerText = props.fileName;
-    const name = document.createElement("p");
-    name.innerHTML = `<span>Name: </span>${props.name === null ? "unknown" : props.name}`;
-    const location = document.createElement("p");
-    location.innerHTML = `<span>location: </span>${props.location === null ? "unknown" : props.location}`;
-    const price = document.createElement("p");
-    price.innerHTML = `<span>Price: </span>${props.price === null ? "unknown" : props.price} $`;
-    const rarity = document.createElement("p");
-    rarity.innerHTML = `<span>Rarity: </span>${props.rarity === null ? "unknown" : props.rarity}`;
+    const name = document.createElement('p');
+    name.innerHTML = `<span>Name: </span>${props.name === null ? 'unknown' : props.name}`;
+    const location = document.createElement('p');
+    location.innerHTML = `<span>location: </span>${props.location === null ? 'unknown' : props.location}`;
+    const price = document.createElement('p');
+    price.innerHTML = `<span>Price: </span>${props.price === null ? 'unknown' : props.price} $`;
+    const rarity = document.createElement('p');
+    rarity.innerHTML = `<span>Rarity: </span>${props.rarity === null ? 'unknown' : props.rarity}`;
     container.append(img, name, location, price, rarity);
     return container;
 };
 exports.default = Card;
 
-},{"native-toast":"alKD9","@parcel/transformer-js/src/esmodule-helpers.js":"1e7QO"}],"alKD9":[function(require,module,exports) {
+},{"native-toast":"alKD9","@parcel/transformer-js/src/esmodule-helpers.js":"ciiiV"}],"alKD9":[function(require,module,exports) {
 'use strict';
 function _interopDefault(ex) {
     return ex && typeof ex === 'object' && 'default' in ex ? ex['default'] : ex;
@@ -615,8 +670,8 @@ var Toast = function Toast(ref) {
     if (el1 === void 0) el1 = document.body;
     var rounded = ref.rounded;
     if (rounded === void 0) rounded = false;
-    var type = ref.type;
-    if (type === void 0) type = '';
+    var type1 = ref.type;
+    if (type1 === void 0) type1 = '';
     var debug = ref.debug;
     if (debug === void 0) debug = false;
     var edge = ref.edge;
@@ -635,9 +690,9 @@ var Toast = function Toast(ref) {
     this.closeOnClick = closeOnClick;
     this.toast = document.createElement('div');
     this.toast.className = "native-toast native-toast-" + this.position;
-    if (type) {
-        this.toast.className += " native-toast-" + type;
-        if (icon) this.message = "<span class=\"native-toast-icon-" + type + "\">" + (icons[type] || '') + "</span>" + this.message;
+    if (type1) {
+        this.toast.className += " native-toast-" + type1;
+        if (icon) this.message = "<span class=\"native-toast-icon-" + type1 + "\">" + (icons[type1] || '') + "</span>" + this.message;
     }
     var messageElement = document.createElement('div');
     messageElement.className = 'native-toast-message';
@@ -685,13 +740,13 @@ function toast(options) {
     return new Toast(options);
 }
 var loop = function() {
-    toast[type1] = function(options) {
+    toast[type] = function(options) {
         return toast(assign({
-            type: type1
+            type: type
         }, options));
     };
 };
-for (var type1 of [
+for (var type of [
     'success',
     'info',
     'warning',
@@ -713,6 +768,6 @@ var index = function(obj) {
 };
 module.exports = index;
 
-},{}]},["iEUqe","int3P"], "int3P", "parcelRequire7165")
+},{}]},["jL3dg","int3P"], "int3P", "parcelRequire7165")
 
 //# sourceMappingURL=index.94538dff.js.map

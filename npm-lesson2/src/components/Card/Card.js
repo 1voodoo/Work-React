@@ -1,41 +1,37 @@
-import showToast from "native-toast";
+import showToast from 'native-toast';
 
 const Card = (props) => {
-    const container = document.createElement("div");
-    container.classList.add("card");
-    container.addEventListener("click", () => {
+  const container = document.createElement('div');
+  container.classList.add('card');
+  const fileName = document.createElement('p');
+  // eslint-disable-next-line no-multi-assign
+  const lol = fileName.innerText = props.fileName;
 
-        showToast({ 
-        message: lol,
-        position: "center",
-        rounded: true,
-        type: "success",
-        
+  container.addEventListener('click', () => {
+    showToast({
+      message: lol,
+      position: 'center',
+      rounded: true,
+      type: 'success',
     });
+  });
 
-});
-    const img = document.createElement("img");
-    img.src = props.src;
+  const img = document.createElement('img');
+  img.src = props.src;
+  const name = document.createElement('p');
+  name.innerHTML = `<span>Name: </span>${props.name === null ? 'unknown' : props.name}`;
 
-    const fileName = document.createElement("p");
-    let lol = fileName.innerText = props.fileName;
-   
-    const name = document.createElement("p");
-    name.innerHTML = `<span>Name: </span>${props.name === null ? "unknown":props.name}`;
+  const location = document.createElement('p');
+  location.innerHTML = `<span>location: </span>${props.location === null ? 'unknown' : props.location}`;
 
-    const location = document.createElement("p");
-    location.innerHTML = `<span>location: </span>${props.location=== null ? "unknown":props.location}`;
+  const price = document.createElement('p');
+  price.innerHTML = `<span>Price: </span>${props.price === null ? 'unknown' : props.price} $`;
 
-    const price = document.createElement("p");
-    price.innerHTML = `<span>Price: </span>${props.price === null ? "unknown":props.price} $`;
+  const rarity = document.createElement('p');
+  rarity.innerHTML = `<span>Rarity: </span>${props.rarity === null ? 'unknown' : props.rarity}`;
 
-    const rarity = document.createElement("p");
-    rarity.innerHTML = `<span>Rarity: </span>${props.rarity === null ? "unknown":props.rarity}`;
+  container.append(img, name, location, price, rarity);
 
-    container.append(img,name, location, price, rarity);
-
-    return container;
-
-   };
-   
-   export default Card;
+  return container;
+};
+export default Card;
