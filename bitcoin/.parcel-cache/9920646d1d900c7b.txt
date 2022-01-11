@@ -27,7 +27,7 @@
 92D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\node_modules\lodash.camelcase\README.md131155832240000000 0
 120D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\node_modules\postcss-modules-scope\node_modules\color-name\index.js131446304070000000 0
 95D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\node_modules\asn1.js\lib\asn1\base\node.js121436361000000000 0
-63D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\.gitignore132863104640043345 0
+63D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\.gitignore132863208596888845 0
 80D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\node_modules\balanced-match132863073272016060 1
 57D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\dist132863143300282533 1
 102D:\My Works JS\lesson with Alex 2\Work-React\bitcoin\node_modules\core-js\features\instance\entries.js121436361000000000 0
