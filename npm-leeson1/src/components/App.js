@@ -1,19 +1,15 @@
-import getWantedPeople from "./Api/Api";
-import CardList from "./CardList/CardList";
+import getWantedPeople from './Api/Api';
 
-const App = async() => {
- const container = document.createElement("div");
+import CardList from './CardList/CardList';
 
-    const cardList = CardList({
-        cards: await getWantedPeople(),
-        
-    });
- container.append(cardList);
+const App = async () => {
+  const container = document.createElement('div');
+  const cardList = CardList({
+    cards: await getWantedPeople(),
+  });
+  container.append(cardList);
 
- return container;
+  return container;
 };
 
 export default App;
-
-
-
