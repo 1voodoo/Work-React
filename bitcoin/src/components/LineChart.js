@@ -1,4 +1,5 @@
 import Chart from 'chart.js/auto';
+import './LineChart.scss';
 
 const LineChart = (props) => {
   const canvas = document.createElement('canvas');
