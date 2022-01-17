@@ -1,0 +1,10 @@
+.container {
+  border-radius: 10%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-gap: 2vw;
+ 
+  
+  
+}
