@@ -5,19 +5,33 @@ const Card = (props) => {
   container.classList.add('card');
 
   const firstName = document.createElement('p');
+  firstName.classList.add('hidden');
   firstName.innerHTML = `<span>Name: </span>${props.first_name === undefined ? 'unknown' : props.first_name}`;
 
   const lastName = document.createElement('p');
+  lastName.classList.add('hidden');
   lastName.innerHTML = `<span>Last Name: </span>${props.last_name === undefined ? 'unknown' : props.last_name}`;
 
   const team = document.createElement('p');
+  team.classList.add('hidden');
   team.innerHTML = `<span>Team City: </span>${props.city === undefined ? 'unknown' : props.city}`;
 
   const division = document.createElement('p');
+  division.classList.add('hidden');
   division.innerHTML = `<span>Team Division: </span>${props.division === undefined ? 'unknown' : props.division}`;
 
   const teamName = document.createElement('p');
+  teamName.classList.add('hidden');
   teamName.innerHTML = `<span>Team Name: </span>${props.full_name === undefined ? 'unknown' : props.full_name}`;
+
+  container.addEventListener('click', () => {
+    firstName.classList.toggle('hidden');
+    lastName.classList.toggle('hidden');
+    team.classList.toggle('hidden');
+    division.classList.toggle('hidden');
+    teamName.classList.toggle('hidden');
+    container.classList.toggle('backWhite');
+  });
 
   if (teamName.innerText.includes('New York Knicks')) {
     container.classList.add('knicks');

@@ -2,15 +2,23 @@
  text-align: center;
  border-radius: 10%;
 }
+.card:hover {
+  box-shadow: 0 0 5px;
+  transform: scale(1.05);
+  transition-timing-function: ease-in;
+  transition-duration: .2s;
+}
+
 p {
-  color: #faf5f5;
-  text-shadow: 
-    -1px -1px 1px #111, 
-    2px 2px 1px #363636;
-  
+  color: #f17171;
+  font-size: large;
+ 
+}
+.hidden {
+  display: none;
 }
 span {
-  color: rgb(0, 0, 0);
+  color: rgb(7, 6, 6);
   font-size: large;
 }
 .knicks {
@@ -18,6 +26,8 @@ span {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 
 .grizzlies {
@@ -25,6 +35,8 @@ span {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 
 .indiana  {
@@ -32,6 +44,8 @@ span {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 
 .boston  {
@@ -39,6 +53,8 @@ span {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 
 .Toronto  {
@@ -46,6 +62,8 @@ span {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 
 .Oklahoma  {
@@ -53,71 +71,99 @@ span {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Detroit  {
   background-image: url(https://az2.hatstoremedia.com/hatstore/images/image-detroit-pistons-kepsar-2017-02-21-125415684/555/555/0/detroit-pistons-kepsar.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Clippers  {
   background-image: url(https://www.nba.com/.element/img/1.0/teamsites/logos/teamlogos_500x500/lac.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Golden {
   background-image: url(https://logos-world.net/wp-content/uploads/2020/05/Golden-State-Warriors-logo.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Philadelphia {
   background-image: url(https://upload.wikimedia.org/wikipedia/en/thumb/0/0e/Philadelphia_76ers_logo.svg/1200px-Philadelphia_76ers_logo.svg.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Utah {
   background-image: url(https://az1.hatstoremedia.com/hatstore/images/image-utah-jazz-kepsar-2017-02-21-125733784/555/555/0/utah-jazz-kepsar.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Sacramento {
   background-image: url(https://statehornet.com/wp-content/uploads/2018/04/Sacramento-Kings-900x563.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Cleveland {
   background-image: url(https://logos-world.net/wp-content/uploads/2020/05/Cleveland-Cavaliers-logo.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Houston {
   background-image: url(https://s.hdnux.com/photos/01/03/47/33/17725135/3/rawImage.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Portland {
   background-image: url(https://simg.nicepng.com/png/small/833-8338663_portland-trail-blazers-logos-iron-on-stickers-and.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Atlanta {
   background-image: url(https://cdn.insidesport.in/wp-content/uploads/2021/03/20045853/40-400497_atlanta-hawks-nba-logo.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
 .Orlando {
   background-image: url(https://media.tacdn.com/media/attractions-splice-spp-674x446/06/70/66/f7.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  min-width: 230px;
+  min-height: 230px;
 }
-
+.backWhite {
+  background-image: none;
+  background-color: bisque;
+  
+}

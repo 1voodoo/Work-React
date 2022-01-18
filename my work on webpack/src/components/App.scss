@@ -11,11 +11,17 @@ button{
   background-repeat: no-repeat;
   background-size: cover;
 }
+button:hover {
+  box-shadow: 0 0 5px;
+  transform: scale(1.05);
+  transition-timing-function: ease-in;
+  transition-duration: .2s;
+}
 .main {
   background-image: url(https://img.championat.com/news/big/m/k/shans-spasti-sezon-nba-est_15843414211415707411.jpg) ;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
   padding: 10px;
-  opacity:0.9;
+ 
 }
