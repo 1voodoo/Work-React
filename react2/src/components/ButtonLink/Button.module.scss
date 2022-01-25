@@ -1,0 +1,8 @@
+.buttonLink {
+  color: rgb(208, 55, 177);
+  cursor: pointer;
+  font-weight: bold;
+  &:hover {
+    color: rgb(169, 55, 177);
+  }
+}
