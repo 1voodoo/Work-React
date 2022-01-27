@@ -1,4 +1,5 @@
-import styles from './Profile.module.scss'
+import styles from './Profile.module.scss';
+
 const Profile = ({ user }) => {
   
   return (
@@ -10,7 +11,7 @@ const Profile = ({ user }) => {
         alt="profile-img"/>
       </div>
       <div className={styles.profilInfo}>
-        <div>{user.firstName} {user.lastName}</div>
+        <div className={styles.name}>{user.firstName} {user.lastName}</div>
         <ul>
           {user.hobbies.map((hobby) => (
             <li key={hobby.id}>

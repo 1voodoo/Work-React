@@ -1,10 +1,25 @@
 import { useState } from "react";
+import style from './ProfileForm.module.scss';
+import iniqId from 'uniqid';
 
-const ProfileForm = ({user}) => {
+const ProfileForm = ({user, onSave}) => {
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [photoSrc, setPhotoSrc] = useState(user.photoSrc);
-  const [hobbies, setHobbies] = useState(user.hobbies)
+  const [hobbies, setHobbies] = useState(user.hobbies);
+  const [isLoading, setIsloading] = useState(false)
+const handleOnClick = () => {
+  setHobbies([
+    ...hobbies,
+    {id: iniqId(), name: ''},
+  ])
+};
+const handleOnHobbieDelit = (hobbyToDelete) => {
+  return () => {
+    const filteredHobbies = hobbies.filter((hobby) => hobby.id !== hobbyToDelete.id);
+    setHobbies(filteredHobbies)
+  };
+};
 
   const handleOnLastNameChange = (event) =>{
     setLastName(event.target.value)
@@ -25,8 +40,20 @@ const ProfileForm = ({user}) => {
     setHobbies(newHobbies);
   };
 
+  const handleProfileSave = async() => {
+    setIsloading(true);
+    await onSave ( {
+      firstName,
+      lastName,
+      photoSrc,
+      hobbies,
+
+    })
+    setIsloading(false);
+  };
+
   return (
-    <div>
+    <div className={style.profile}>
       <label>
         Photo URL:
         <input value={photoSrc} onChange={handleOnPhotoSrcChange}/>
@@ -44,10 +71,12 @@ const ProfileForm = ({user}) => {
         {hobbies.map((hobby) => (
           <div key={hobby.id}>
             <input value={hobby.name} onChange={handleOnHobbyChange(hobby)}/>
-
+            <button onClick={handleOnHobbieDelit(hobby)}>x</button>
           </div>
         ))}
+        <button onClick={handleOnClick}>Add</button>
       </div>
+      <button onClick={handleProfileSave} disabled={isLoading}>{isLoading ? 'Loading': 'Save'}</button>
     </div>
   );
 };

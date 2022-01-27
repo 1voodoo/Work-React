@@ -1,38 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ButtonLink from "./components/ButtonLink/ButtonLink";
 import Profile from "./components/Profile/Profile";
 import ProfileForm from "./components/ProfileForm/ProfileForm";
+import {Hearts} from 'react-loader-spinner';
+import getProfile from "./api/getProfile.js/api/getProfile";
+import updeitProfile from "./api/getProfile.js/updeitProfile";
 
-
-const TEST_DATA = {
-  firstName: 'Ighar',
-  lastName: 'Belozor',
-  photoSrc: 'https://icdn.lenta.ru/images/2021/04/27/16/20210427163138131/square_320_c09ebae17387b7d6eeb9fa0d42afe5ee.jpg',
-  hobbies: [{id: '1', name: 'quitar'},{id: '3', name: 'lalalal'},{id: '2', name: 'lolololo'}]
-};
 const UserProfileContainerStyles = {
   display: 'flex',
+  'justify-content': 'space-around',
 }
 const App = () => {
+  const [isEdit, setIsEdit] = useState(false);
+  const [data, setData] = useState(null);
+ 
+
   const handleEdit = () => {
     setIsEdit(true);
   }
 
-  const [isEdit, setIsEdit] = useState(false);
   
-  const handleSave = () => {
+  const handleSave = async(newPrifileData) => {
+    const updateData = await updeitProfile(newPrifileData);
+    setData(updateData);
     setIsEdit(false);
-  }
+  };
+
+  const fethProfileData = async() => {
+    const newData = await getProfile();
+    setData(newData);
+  };
+
+  useEffect(() => {
+    fethProfileData();
+  }, []);
 
   return (
-    <div style={UserProfileContainerStyles} className="App">
+    <div style={UserProfileContainerStyles}>
       <div>User Profile{' '}</div>
-      <ButtonLink onClick={isEdit ? handleSave : handleEdit}>
-        {isEdit ? 'Save' : 'Edit'}
-      </ButtonLink>
-     
-     {!isEdit && <Profile user={TEST_DATA}/>}
-     {!isEdit && <ProfileForm user={TEST_DATA}/>}
+      {!isEdit && data && (
+        <ButtonLink onClick={handleEdit}>
+        Edit
+        </ButtonLink>
+      )}
+     <div/>
+     {!data && <Hearts/>}
+     {!isEdit && data && <Profile user={data}/>}
+     {isEdit && data && <ProfileForm user={data} onSave={handleSave}/>}
     </div>
   );
 };
