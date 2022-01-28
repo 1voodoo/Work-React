@@ -7,6 +7,7 @@ const CardList = (props) => {
   const cardElements = props.cards.map((card) => Card(card));
 
   container.append(...cardElements);
+
   return container;
 };
 

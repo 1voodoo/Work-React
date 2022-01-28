@@ -7,13 +7,15 @@ const App = async () => {
   header.classList.add('header');
   const container = document.createElement('div');
   const button = document.createElement('button');
-  button.addEventListener('click', async () => {
+
+  button.addEventListener('click', async function lol() {
     container.classList.add('main');
     const cardList = CardList({
       cards: await Api(),
     });
 
     container.append(cardList);
+    button.removeEventListener('click', lol);
   });
   header.append(button);
   container.prepend(header);
