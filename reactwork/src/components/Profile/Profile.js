@@ -10,7 +10,7 @@ const Profile = ({ user, user1 }) => {
   return (
     <div className={style.container1}>
       {user.map((person, id) => <div className={style.container}key={id}>
-        <img alt='foto' className={style.img} src={user1}/>
+        <div className={style.img1}><img alt='foto' className={style.img} src={user1}/></div>
         <p><span>Name:</span> {person.name}</p>
         <p><span>User Name: </span>{person.username}</p>
         <p><span>Email: </span>{person.email}</p>
