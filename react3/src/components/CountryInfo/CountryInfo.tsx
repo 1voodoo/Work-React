@@ -1,11 +1,42 @@
-import { FC } from 'react';
-import { useParams } from 'react-router-dom';
+import { Avatar, CircularProgress } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import getCountryInfo, { ICountryInfo } from '../api/getCountryInfo';
 
  const CountryInfo: FC = () => {
-   const params = useParams();
+  const[countryInfo, setCountryInfo] = useState<ICountryInfo | null>(null);
+  const { countryCode } = useParams();
+  const navigate = useNavigate();
+  const handleOnClick = (countryCode: string) => () => {
+    navigate(`/countries/${countryCode}`)
+  };
+
+  const fethCountryInfo = async () => {
+    setCountryInfo(null);
+  const newCountryInfo = await getCountryInfo(countryCode!);
+    setCountryInfo(newCountryInfo);
+
+   }
+
+   useEffect (() => {
+    fethCountryInfo();
+   // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [countryCode]);
+
    return (
      <div>
-       Counry Info: {params.countryCode}
+       {!countryInfo && <CircularProgress color="secondary" />}
+       {countryInfo && (
+         <div>
+           <div>{countryInfo.commonName}({countryInfo.officialName})-{countryInfo.region}</div>
+           <div>{countryInfo.countryCode}</div>
+           <div>
+             {countryInfo.borders.map(({countryCode}) => (
+             <Avatar onClick={handleOnClick(countryCode)}>{countryCode}</Avatar>
+           ))}
+           </div>
+         </div>
+       )}
      </div>
       
    );
