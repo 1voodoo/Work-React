@@ -1,0 +1,33 @@
+.conteiner {
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: aqua;
+}
+.main {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+.cont {
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border: 1px solid blanchedalmond;
+  
+}
+.cont:hover {
+  transform: translate(50px);
+  transition-duration: 1s;
+}
+
+.p {
+  color: black;
+  margin: 0 5px;
+}
