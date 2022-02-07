@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: center;
+}
+button{
+  border-radius: 10%;
+  width: 100px;
+  height: 100px;
+  background-image: url(https://cfo.russiabasket.ru/Files/Clubs/nqpxjbfz.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+button:hover {
+  box-shadow: 0 0 5px;
+  transform: scale(1.05);
+  transition-timing-function: ease-in;
+  transition-duration: .2s;
+}
+.main {
+  background-image: url(https://img.championat.com/news/big/m/k/shans-spasti-sezon-nba-est_15843414211415707411.jpg) ;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 10px;
+ 
+}
