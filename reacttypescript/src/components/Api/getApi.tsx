@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export interface IApi {
-  id: number;
+  id: string;
   name: string;
   username: string;
   email: string;
@@ -11,9 +11,10 @@ export interface IApi {
     street: string;
   }
   website: string;
-}
+};
+
 const getApi = async(): Promise<IApi[]> => {
-  const respons = await axios.get(`https://jsonplaceholder.typicode.com/users/`);
+  const respons = await axios.get('https://jsonplaceholder.typicode.com/users/');
   return respons.data;
 };
 

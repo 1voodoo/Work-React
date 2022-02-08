@@ -8,7 +8,7 @@ const AppRoutes: FC = () => {
   return (
     <Routes>
       <Route path="/" element={<App/>} />
-      <Route path="info/:id" element={<Info/>} />
+      <Route path="/user/:id" element={<Info/>} />
       <Route path="*" element={<Page404/>} />
     </Routes>
   );
