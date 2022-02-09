@@ -1,14 +1,25 @@
-import { Avatar, CircularProgress } from '@mui/material';
+import { Avatar, Button, CircularProgress } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import getCountryInfo, { ICountryInfo } from '../api/getCountryInfo';
+import style from './CountryInfo.module.scss';
+
 
  const CountryInfo: FC = () => {
   const[countryInfo, setCountryInfo] = useState<ICountryInfo | null>(null);
   const { countryCode } = useParams();
   const navigate = useNavigate();
+
   const handleOnClick = (countryCode: string) => () => {
     navigate(`/countries/${countryCode}`)
+  };
+  
+  const handleOnClick1 = (countryCode: string) => () => {
+    navigate(`/countries/${countryCode}/holidays`)
+  };
+
+  const handleOnClick2 = () => {
+    navigate('/')
   };
 
   const fethCountryInfo = async () => {
@@ -24,16 +35,29 @@ import getCountryInfo, { ICountryInfo } from '../api/getCountryInfo';
    }, [countryCode]);
 
    return (
-     <div>
+     <div className={style.conteiner}>
        {!countryInfo && <CircularProgress color="secondary" />}
        {countryInfo && (
          <div>
-           <div>{countryInfo.commonName}({countryInfo.officialName})-{countryInfo.region}</div>
-           <div>{countryInfo.countryCode}</div>
-           <div>
+           <div><h1>{countryInfo.commonName}({countryInfo.officialName})-{countryInfo.region}</h1></div>
+           <div><span>CountryCode:</span>{countryInfo.countryCode}</div>
+           <div className={style.conteinerAvatar}>
              {countryInfo.borders.map(({countryCode}) => (
-             <Avatar onClick={handleOnClick(countryCode)}>{countryCode}</Avatar>
+               <div  className={style.avatar} key={countryCode}>
+                 <Avatar 
+                 src={`https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`}
+                 variant="rounded"
+                 sx={{ width: 40, height: 30 }} 
+                 alt={countryCode}
+                 onClick={handleOnClick(countryCode)}
+                 >{countryCode}</Avatar>
+               </div>
            ))}
+           </div>
+           <div className={style.conteinerBtn}>
+           <Button  onClick={handleOnClick2} variant="contained">HOME</Button>
+           <Button  onClick={handleOnClick1(countryInfo?.countryCode)} variant="contained">Holidays</Button>
+           
            </div>
          </div>
        )}

@@ -1,0 +1,25 @@
+.conteiner {
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.conteinerAvatar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+.avatar:hover{
+  transition: 1s;
+  transform: scale(1.5);
+  
+ 
+}
+.conteinerBtn {
+  display: flex;
+  justify-content: space-between;
+
+}
