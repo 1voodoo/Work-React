@@ -25,7 +25,7 @@ const Info: FC = () => {
     fetchUser(Number(id));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
-  console.log(user);
+
   return (
     <div className={style.continer1} >
      <Button className={style.button} onClick={handleClick()} variant="contained">Back Home</Button>

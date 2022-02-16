@@ -1,6 +1,6 @@
 import { Avatar, Button } from '@mui/material';
 import { FC, useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import style from './App.module.scss';
 import getApi, { IApi } from './components/Api/getApi';
 import Sceletons from './components/Sceletons';
@@ -8,8 +8,7 @@ import Sceletons from './components/Sceletons';
 const  App: FC = () => {
   const [users, setUsrers] = useState<IApi[] | null>(null);
   const navigate = useNavigate();
-  const { id } = useParams();
-
+  
   const fetch = async() => {
     setUsrers(null);
     const answer = await getApi();
@@ -23,10 +22,8 @@ const  App: FC = () => {
 
   const handleClick = (id: number) => () => {
     navigate(`/user/${id}`);
-    console.log(id)
   };
   
-  console.log(id);
   return (
     <div className={style.conteiner}>
         {!users && <Sceletons/>}
