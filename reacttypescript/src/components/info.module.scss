@@ -1,0 +1,50 @@
+.continer1 {
+  margin: 0;
+  padding: 15px;
+  min-height: 100vh;
+  background-color: black;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.continer2 {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+ 
+}
+.con {
+  display: flex;
+}
+
+.continer {
+  min-width: 200px;
+  display: flex;
+  border-radius: 25px;
+  border: 1px solid blueviolet;
+  flex-direction: column;
+  padding: 10px;
+}
+img {
+  width: 40px;
+  height: 40px;
+}
+img:hover {
+  transform: scale(1.5);
+  transition-duration: 1s;
+    
+}
+p {
+  color: antiquewhite;
+}
+p:hover {
+  color: green;
+}
+
+.button {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
