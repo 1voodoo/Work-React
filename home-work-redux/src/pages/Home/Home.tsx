@@ -6,7 +6,7 @@ import { getAllCoctails } from "../../store/info";
 import style from './Home.module.scss'
 
 const COLUMNS: GridColDef[] = [
-  { field: 'strDrink', headerName: 'Название', flex: 0.15},
+  { field: 'strDrink', headerName: 'Название', flex: 0.10},
   { field: 'strCategory', headerName: 'Категория', flex: 0.15},
   { field: 'strAlcoholic', headerName: 'Алкогольный', flex: 0.15},
   { field: 'strInstructions', headerName: 'Способ приготовления',flex: 1},
@@ -35,6 +35,7 @@ const Home:FC = () => {
 
   return (
     <div className={style.wrapper}>
+      <h1>Drinks menu</h1>
       <div style={{height: 500}}>
         <DataGrid 
           loading= {!rows}
@@ -45,6 +46,7 @@ const Home:FC = () => {
           sx={{
             boxShadow: 2,
             border: 2,
+            backgroundColor: 'white',
             borderColor: 'primary.light',
             '& .MuiDataGrid-cell:hover': {
               color: 'primary.main',
