@@ -3,23 +3,18 @@ import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { getPlaces } from "../../store/Place/ActionCreators";
-import pluralize from 'pluralize';
 import formatDate from "../../utils/formatDate";
 import DateFormat from "../../constants/DateFormant";
 import { PlaceType } from "../../api/Places";
-import {Cabin, DirectionsTransit, Security} from "@mui/icons-material";
-import { Tooltip } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import PlaceTypeIcon from "../../components/PlaceTypeIcon/PlaceTypeIcon";
+import formatCapacity from "../../utils/formatCapacity";
+import PageLayout from "../../components/PlaceTypeIcon/PageLayout/PageLayout";
+
 
 const mapType = (type: PlaceType) => {
   return (
-    <Tooltip title={type}>
-      <>
-        {type === PlaceType.Basement && <Cabin/>}
-        {type === PlaceType.Bunker && <Security/>}
-        {type === PlaceType.Metro && <DirectionsTransit/>}
-      </>
-    </Tooltip>
+    <PlaceTypeIcon type={type} />
   );
 };
 
@@ -49,22 +44,24 @@ const openDetails = (id: string) => {
       id: place.id,
       address: place.address,
       type: place.type,
-      capacity: `${place.capacity} ${pluralize('person', place.capacity)}`,
+      capacity: formatCapacity(place.capacity),
       createdAt: formatDate(place.createdAt, DateFormat.ShortDate),
     };
   });
 
   return (
-    <div style={{height: 500}}>
-      <DataGrid
-        loading= {!rows}
-        rows={rows || []}
-        columns= {COLUMNS}
-        pageSize={7}
-        isRowSelectable={() => false}
-        onRowClick={(params) => openDetails(params.id.toString())}
-      />
-    </div>
+    <PageLayout>
+      <div style={{height: 500}}>
+        <DataGrid
+          loading= {!rows}
+          rows={rows || []}
+          columns= {COLUMNS}
+          pageSize={7}
+          isRowSelectable={() => false}
+          onRowClick={(params) => openDetails(params.id.toString())}
+        />
+      </div>
+    </PageLayout>
   );
 };
 
