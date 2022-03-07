@@ -1,3 +1,4 @@
+import { Stack, Avatar } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { FC, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +23,9 @@ const Home:FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
+  
   const rows = coctails?.map((info) => {
+  
     return {
       id: info.idDrink,
       strDrink: info.strDrink,
@@ -35,6 +38,11 @@ const Home:FC = () => {
 
   return (
     <div className={style.wrapper}>
+    <Stack direction="row" spacing={2}>
+      <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
+      <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />
+      <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+    </Stack>
       <h1>Drinks menu</h1>
       <div style={{height: 500}}>
         <DataGrid 
