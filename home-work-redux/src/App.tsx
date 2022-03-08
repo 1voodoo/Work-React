@@ -1,11 +1,15 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import Error404 from './pages/Error404/Error404';
 import Home from './pages/Home/Home';
+import MenuDiscription from './pages/MenuDiscription/MenuDiscription';
 
-const App:FC = () => {
+const App: FC = () => {
   return (
     <Routes>
-      <Route path='/'element={<Home />} />
+      <Route path='/' element={<Home />} />
+      <Route path='/menu/:id' element={<MenuDiscription />} />
+      <Route path='*' element={<Error404 />} />
     </Routes>
   );
 };
