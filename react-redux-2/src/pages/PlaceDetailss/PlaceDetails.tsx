@@ -2,7 +2,7 @@ import { Card, CardMedia, CardContent, Typography, CardActions, Button, Skeleton
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import PageLayout from '../../components/PlaceTypeIcon/PageLayout/PageLayout';
+import PageLayout from '../../components/PageLayout/PageLayout';
 import PlaceTypeIcon from '../../components/PlaceTypeIcon/PlaceTypeIcon';
 import DateFormat from '../../constants/DateFormant';
 import { RootState } from '../../store';
@@ -12,6 +12,7 @@ import formatDate from '../../utils/formatDate';
 import styles from './PlaceDetails.module.scss';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import NotFound from '../NotFound/NotFound';
 
 
 const PlaceDetails:FC = () => {
@@ -22,6 +23,7 @@ const PlaceDetails:FC = () => {
 
   useEffect (() => {
     dispatch(getPlaceDetails(id!))
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -38,7 +40,9 @@ const PlaceDetails:FC = () => {
 
   if(placeDetails[id!] === null) {
     return (
-      <div>Ooooops Not Found</div>
+      <div>
+        <NotFound/>
+        </div>
     )
   }
 

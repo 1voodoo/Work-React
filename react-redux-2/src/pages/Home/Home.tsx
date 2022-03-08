@@ -9,7 +9,7 @@ import { PlaceType } from "../../api/Places";
 import { useNavigate } from "react-router-dom";
 import PlaceTypeIcon from "../../components/PlaceTypeIcon/PlaceTypeIcon";
 import formatCapacity from "../../utils/formatCapacity";
-import PageLayout from "../../components/PlaceTypeIcon/PageLayout/PageLayout";
+import PageLayout from "../../components/PageLayout/PageLayout";
 
 
 const mapType = (type: PlaceType) => {
@@ -32,6 +32,7 @@ const Home:FC = () => {
 
   useEffect (() => {
     dispatch(getPlaces())
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
 const openDetails = (id: string) => {

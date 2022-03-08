@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import placesReducer from "./Place/Reducer";
 import placeDetailsReducer from "./PlaceDetails/Reducer";
+import popupManagementReducer from "./PopupManagement/Reducer";
+
 
 export const store = configureStore ({
   reducer: {
     places: placesReducer,
     placesDetails: placeDetailsReducer,
+    popupManagement: popupManagementReducer,
   },
 });
 
