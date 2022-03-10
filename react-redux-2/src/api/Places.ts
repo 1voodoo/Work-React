@@ -1,4 +1,5 @@
 import { random } from 'lodash';
+import { ICraeteSafePlaceFormData } from '../components/CreateSafePlacePopup/validateCraeteSafePlaceForm';
 
 export enum PlaceType {
   Basement = 'basement',
@@ -47,5 +48,16 @@ public getById(id:string): Promise<IPlace | null > {
 
     setTimeout(() => resolve(placeDetails), 1000)
    });
+  }
+  public create(data: ICraeteSafePlaceFormData): Promis<void> {
+    return new Promise ((resolve) => {
+      setTimeout(() => {
+        FAKE_DATA.push({
+          ...data,
+          id: `id-${FAKE_DATA.length +1}`,
+          createdAt: Date.now
+        })
+        resolve(), 1000)
+    });
   }
 }
