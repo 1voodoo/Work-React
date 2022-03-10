@@ -4,12 +4,11 @@ import style from './Error404.module.scss';
 
 
 const Error404: FC = () => {
+
   const navigate = useNavigate();
-
   const handlOnClick = () => {
-    navigate('/')
-  }
-
+    navigate('/');
+  };
 
   return (
     <div className={style.container}>
