@@ -29,9 +29,7 @@ const Home:FC = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
-  const openMenu = (idDrink: string) => {
-    navigate(`/menu/${idDrink}`);
-  };
+ 
   
   const rows = coctails?.map((info) => {
     
@@ -44,6 +42,9 @@ const Home:FC = () => {
       strDrinkThumb: info.strDrinkThumb
     };
   });
+  const openMenu = (idDrink: string) => {
+    navigate(`/menu/${idDrink}`)
+  }
 
   return (
     <div className={style.wrapper}>

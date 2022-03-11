@@ -7,9 +7,9 @@ import MenuDiscription from './pages/MenuDiscription/MenuDiscription';
 const App: FC = () => {
   return (
     <Routes>
-      <Route path= "/"element={<Home />} />
-      <Route path= "/menu/:id" element={<MenuDiscription />} />
-      <Route path= "*" element={<Error404 />} />
+      <Route path= '/' element={<Home />} />
+      <Route path= '/menu/:id' element={<MenuDiscription />} />
+      <Route path= '*' element={<Error404 />} />
     </Routes>
   );
 };
