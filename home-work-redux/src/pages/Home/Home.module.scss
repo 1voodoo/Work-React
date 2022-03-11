@@ -1,0 +1,38 @@
+.wrapper {
+  max-width: 1450px;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 40px;
+}
+p {
+  padding: 0;
+  color: rgb(20, 131, 228);
+}
+.wrapper h1 {
+  display: flex;
+  justify-content: center;
+  font-size: 60px;
+  color: rgb(250, 4, 4);
+  
+}
+h1:before {
+  content: "";
+  border-bottom: 1px solid rgb(65, 7, 224);
+  width: 30%;
+  height: 0.5em;
+}
+h1:after {
+  content: "";
+  border-bottom: 1px solid rgb(65, 7, 224);
+  width: 30%;
+  height: 0.5em;
+}
+.foto {
+  width: 60px;
+  height: 60px;
+  border-radius: 10px;
+
+}
