@@ -3,8 +3,10 @@ import { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { RootState } from '../../store';
+import { createPlace } from '../../store/Place/ActionCreators';
 import { closeSafePlacePopup, openSafePlacePopup } from '../../store/PopupManagement/ActionCreators';
 import CreateSafePlacePopup from '../CreateSafePlacePopup/CreateSafePlacePopup';
+import { ICraeteSafePlaceFormData } from '../CreateSafePlacePopup/validateCraeteSafePlaceForm';
 import styles from './PageLayout.module.scss';
 
 const PageLayout: FC = ({ children }) => {
@@ -20,10 +22,10 @@ const PageLayout: FC = ({ children }) => {
     dispatch(openSafePlacePopup());
   };
 
-  const handleOnSave = async (data: ICreateSafePlaceFormData) => {
+  const handleOnSave = async (data: ICraeteSafePlaceFormData) => {
     await dispatch(createPlace(data));
     dispatch(closeSafePlacePopup());
-  }
+  };
 
   return (
     <div className={styles.mainContainer}>

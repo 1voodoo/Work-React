@@ -49,15 +49,18 @@ public getById(id:string): Promise<IPlace | null > {
     setTimeout(() => resolve(placeDetails), 1000)
    });
   }
-  public create(data: ICraeteSafePlaceFormData): Promis<void> {
+
+  public create(data: ICraeteSafePlaceFormData): Promise<void> {
     return new Promise ((resolve) => {
       setTimeout(() => {
         FAKE_DATA.push({
           ...data,
-          id: `id-${FAKE_DATA.length +1}`,
-          createdAt: Date.now
-        })
-        resolve(), 1000)
+          id:`id-${FAKE_DATA.length + 1}`,
+          createdAt: Date.now(),
+        });
+        
+        resolve();
+      }, 1000)
     });
   }
 }

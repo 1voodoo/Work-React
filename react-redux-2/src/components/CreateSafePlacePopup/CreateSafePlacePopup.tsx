@@ -5,11 +5,11 @@ import { PlaceType } from '../../api/Places';
 import PlaceTypeIcon from '../PlaceTypeIcon/PlaceTypeIcon';
 import styles from './CreateSafePlacePopup.module.scss';
 import PopupLayout from '../PopupLayuot/PopupLayout';
-import validateCreateSafePlaceForm, { IValidateCreateSafePlaceFormResult } from './validateCraeteSafePlaceForm';
+import validateCreateSafePlaceForm, { ICraeteSafePlaceFormData, IValidateCreateSafePlaceFormResult } from './validateCraeteSafePlaceForm';
 import { closeSafePlacePopup } from '../../store/PopupManagement/ActionCreators';
 import AppMarkdownEditor from '../AppMarkdownEditor';
 interface ICreateSafePlacePopupProps {
-  onSave: (data: ICreateSafePlaceFormData) => void;
+  onSave: (data: ICraeteSafePlaceFormData) => void;
 }
 
 const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
@@ -27,7 +27,7 @@ const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
 
   const handleOnAddressChange = (event: ChangeEvent<HTMLInputElement>) => {
     setAddress(event.target.value);
-    setErrors({ ...errors, address: undefined });
+    setErrors({ ...errors, address: undefined  });
   };
 
   const handleOnImageSrcChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,12 +46,12 @@ const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
   };
 
   const handleOnBlur = (key: keyof IValidateCreateSafePlaceFormResult) => () => {
-    const newErrors = validateCreateSafePlaceForm({ address, capacity, description, imageSrc });
+    const newErrors = validateCreateSafePlaceForm({ address, capacity, description, imageSrc, type });
     setErrors({ ...errors, [key]: newErrors[key] });
   };
 
   const isCreateDisabled = () => {
-    const newErrors = validateCreateSafePlaceForm({ address, capacity, description, imageSrc });
+    const newErrors = validateCreateSafePlaceForm({ address, capacity, description, imageSrc, type });
     return Object.keys(newErrors).length > 0;
   };
 
@@ -104,7 +104,7 @@ const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
             variant="contained"
             color="primary"
             disabled={isCreateDisabled()}
-            onClick={() => onSave({ address, capacity, description, imageSrc })}
+            onClick={() => onSave({ address, capacity, description, imageSrc, type })}
           >
             Create Safe Place
         </Button>

@@ -1,6 +1,6 @@
 enum PlacesActionType {
   GetAll = 'places/getPlaces',
-  CreatePlace = 'place/createType'
+  CreatePlace = 'places/createPlace',
 }
 
 export default PlacesActionType;

@@ -1,5 +1,7 @@
+import { PlaceType } from "../../api/Places";
+
 export interface IValidateCreateSafePlaceFormResult {
-  adress?: string;
+  address?: string;
   description?: string;
   imageSrc?: string;
   capacity?: string;
@@ -7,10 +9,11 @@ export interface IValidateCreateSafePlaceFormResult {
 }
 
 export interface ICraeteSafePlaceFormData {
-  adress: string;
+  address: string;
   description: string;
   imageSrc: string;
   capacity: number;
+  type: PlaceType;
 
 }
 const HTTPS_REGEX = /^https:\/\//;
@@ -18,8 +21,8 @@ const HTTPS_REGEX = /^https:\/\//;
 const validateCreateSafePlaceForm  = (data:ICraeteSafePlaceFormData):IValidateCreateSafePlaceFormResult => {
   const errors: IValidateCreateSafePlaceFormResult = {};
 
-  if (data.adress.length < 10 ) {
-    errors.adress = 'Addres must be at last 10 charaters'
+  if (data.address.length < 10 ) {
+    errors.address = 'Addres must be at last 10 charaters'
   }
   
   if (data.imageSrc.length === 0) {
@@ -34,7 +37,7 @@ const validateCreateSafePlaceForm  = (data:ICraeteSafePlaceFormData):IValidateCr
     errors.description = 'Description must be less than 50 charaters'
   }
 
-  if (data.capacity <= 50) {
+  if (data.capacity <= 0) {
     errors.capacity = 'Capacity must be greater than 0'
   }
 
