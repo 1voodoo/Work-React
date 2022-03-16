@@ -17,6 +17,8 @@ const generationFakeDataItem = (index: number) => {
     imageSrc: 'https://media.npr.org/assets/img/2022/02/25/gettyimages-1372620623_custom-4895d389987758c4dc1bfc6d5752ffd3eb55efc4-s1100-c50.jpg',
     createdAt: Date.now() - (random(1, 20, true)* MILLISECONDS_IN_ONE_YEAR),
     type: Object.values(PlaceType)[random(0, 2, false)],
+    likes: random(0, 100),
+    isLiked: random(0, 3) === 0,
   };
 }
 
@@ -28,9 +30,11 @@ export interface IPlace {
   imageSrc: string;
   createdAt: number;
   type: PlaceType;
+  likes: number;
+  isLiked: boolean;
 }
 
-const FAKE_DATA: IPlace[] = Array
+let FAKE_DATA: IPlace[] = Array
 .from({ length: 1000 })
 .map((item, index) => generationFakeDataItem(index))
  
@@ -50,17 +54,47 @@ public getById(id:string): Promise<IPlace | null > {
    });
   }
 
-  public create(data: ICraeteSafePlaceFormData): Promise<void> {
+  public create(data: ICraeteSafePlaceFormData): Promise<IPlace> {
     return new Promise ((resolve) => {
       setTimeout(() => {
-        FAKE_DATA.push({
+
+        const newPlace = {
           ...data,
           id:`id-${FAKE_DATA.length + 1}`,
           createdAt: Date.now(),
-        });
-        
-        resolve();
+          likes: 0,
+          isLiked: false,
+        }
+
+        FAKE_DATA = [
+          ...FAKE_DATA,
+          newPlace,
+        ];
+        // throw new Error('kfdjsdkfjskdfjsdfkjsdfkjsfdk');
+        resolve(newPlace);
       }, 1000)
     });
+  }
+  public like(id: string): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        FAKE_DATA = FAKE_DATA.map((place) => ({
+          ...place,
+          likes: place.id === id ? place.likes + 1 : place.likes,
+        }));
+        resolve();
+      }, 1000);
+    });
+  }
+    public dislike(id: string): Promise<void> {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          FAKE_DATA = FAKE_DATA.map((place) => ({
+            ...place,
+            likes: place.id === id ? place.likes - 1 : place.likes,
+          }));
+          reject();
+        }, 1000);
+      });
   }
 }

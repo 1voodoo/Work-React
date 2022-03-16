@@ -6,7 +6,7 @@ import PageLayout from '../../components/PageLayout/PageLayout';
 import PlaceTypeIcon from '../../components/PlaceTypeIcon/PlaceTypeIcon';
 import DateFormat from '../../constants/DateFormant';
 import { RootState } from '../../store';
-import { getPlaceDetails } from '../../store/PlaceDetails/ActionCreators';
+import { dislikePlace, getPlaceDetails, likePlace } from '../../store/PlaceDetails/ActionCreators';
 import formatCapacity from '../../utils/formatCapacity';
 import formatDate from '../../utils/formatDate';
 import styles from './PlaceDetails.module.scss';
@@ -24,7 +24,7 @@ const PlaceDetails:FC = () => {
   useEffect (() => {
     dispatch(getPlaceDetails(id!))
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [id]);
 
   const {
     address,
@@ -32,7 +32,9 @@ const PlaceDetails:FC = () => {
     createdAt,
     description,
     imageSrc,
-    type
+    type,
+    likes,
+    isLiked,
 
   } = placeDetails[id!] || {};
 
@@ -44,6 +46,14 @@ const PlaceDetails:FC = () => {
         <NotFound/>
         </div>
     )
+  }
+
+  const handleLikeClick = () => {
+    dispatch(likePlace(id!));
+  }
+
+  const handleDisLikeClick = () => {
+    dispatch(dislikePlace(id!))
   }
 
   return (
@@ -76,7 +86,8 @@ const PlaceDetails:FC = () => {
             </Typography>
           </CardContent>
           <CardActions>
-            <Button disabled={isLoading} size="small">Like</Button>
+            {!isLiked && <Button onClick={handleLikeClick} disabled={isLoading} size="small">{likes} Like</Button>}
+            {isLiked && <Button onClick={handleDisLikeClick} disabled={isLoading} size="small" color='error'>{likes} DisLike</Button>}
           </CardActions>
         </Card>
       </div>
