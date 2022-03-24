@@ -1,8 +1,9 @@
 import { Alert, AppBar, Button, Container, Snackbar } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC, useContext, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { IPlace } from '../../api/Places';
+import { ThemeContext } from '../../providers/ThemeProvider';
 import { RootState, useAppDispatch } from '../../store';
 import { createPlace, getPlaces } from '../../store/Place/ActionCreators';
 import { closeSafePlacePopup, openSafePlacePopup } from '../../store/PopupManagement/ActionCreators';
@@ -16,7 +17,7 @@ const PageLayout: FC = ({ children }) => {
   const { isCreateSafePlacePopupOpen } = useSelector((state: RootState) => state.popupManagement);
   const [isSuccessToasterShow, setIsSuccessToasterShow] = useState(false);
   const [isErrorToasterShow, setIsisErrorToasterShowToasterShow] = useState(false);
-  
+  const { isDarkTheme, setIsDarkTheme } = useContext(ThemeContext);
 
 
   const handleGoToHome = () => {
@@ -46,12 +47,16 @@ const PageLayout: FC = ({ children }) => {
   const handleErrorTosterClose = () => {
     setIsSuccessToasterShow(false);
   }
+   const handleChangeTheme = () => {
+    setIsDarkTheme(!isDarkTheme);
+  };
 
   return (
     <div className={styles.mainContainer}>
-      <AppBar position="sticky" className={styles.appBar}>
+      <AppBar position="sticky" className={styles.appBar} color={isDarkTheme ? 'primary': 'secondary'}>
         <Container className={styles.container}>
           <div className={styles.logo} onClick={handleGoToHome}>Ukraine</div>
+          <Button variant="contained" color="secondary" onClick={handleChangeTheme}>Change Theme</Button>
           <Button variant="contained" color="secondary" onClick={handleAddNewSavePlace}>Add New Safe Place</Button>
         </Container>
       </AppBar>

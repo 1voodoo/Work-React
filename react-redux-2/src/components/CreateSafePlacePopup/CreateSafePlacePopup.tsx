@@ -1,5 +1,5 @@
 import { Button, MenuItem, Select, TextField } from '@mui/material';
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useState, KeyboardEvent, useRef} from 'react';
 import { useDispatch } from 'react-redux';
 import { PlaceType } from '../../api/Places';
 import PlaceTypeIcon from '../PlaceTypeIcon/PlaceTypeIcon';
@@ -21,6 +21,8 @@ const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
   const [capacity, setCapacity] = useState(10);
   const [errors, setErrors] = useState<IValidateCreateSafePlaceFormResult>({});
   const [isLoading, setIsloading ] = useState(false);
+  const createSafePlaceButtonRef = useRef<HTMLButtonElement>(null);
+  const markdownRef = useRef<HTMLDivElement>(null);
 
   const handleOnClose = () => {
     dispatch(closeSafePlacePopup());
@@ -66,6 +68,14 @@ const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
   
   }
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      createSafePlaceButtonRef.current!.click()
+    }
+  };
+  
+  
+
   return (
     <PopupLayout title="Create Safe Place" onClose={handleOnClose}>
       <div className={styles.container}>
@@ -78,6 +88,7 @@ const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
           onBlur={handleOnBlur('address')}
         />
         <AppMarkdownEditor
+          ref={markdownRef}
           error={!!errors.description}
           helperText={errors.description}
           value={description}
@@ -108,10 +119,12 @@ const CreateSafePlacePopup: FC<ICreateSafePlacePopupProps> = ({ onSave }) => {
           value={capacity}
           onChange={handleOnCapacityChange}
           onBlur={handleOnBlur('capacity')}
+          onKeyDown={handleKeyDown}
         />
         <div className={styles.footer}>
         <Button onClick={handleOnClose}>Cancel</Button>
           <Button
+            ref={createSafePlaceButtonRef}
             variant="contained"
             color="primary"
             disabled={isCreateDisabled()}
